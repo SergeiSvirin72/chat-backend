@@ -16,8 +16,6 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $ids =
-
         $users = User::where([
             ['username', 'like', $request->query('q').'%'],
             ['id', '!=', Auth::id()],
