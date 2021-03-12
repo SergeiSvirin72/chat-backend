@@ -2,24 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Room;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class RoomController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $rooms = Auth::user()->rooms()->has('messages')->with(['users' => function ($query) {
-            $query->where('users.id', '!=', Auth::id());
-        }])->get();
-        return response()->json($rooms);
+        $ids =
+
+        $users = User::where([
+            ['username', 'like', $request->query('q').'%'],
+            ['id', '!=', Auth::id()],
+        ])
+            ->whereNotIn('id', [1, 2, 3])
+            ->orderBy('username')->limit(10)->get();
+        return response()->json($users);
     }
 
     /**
@@ -46,10 +51,10 @@ class RoomController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Room  $room
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(Room $room)
+    public function show(User $user)
     {
         //
     }
@@ -57,10 +62,10 @@ class RoomController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Room  $room
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(Room $room)
+    public function edit(User $user)
     {
         //
     }
@@ -69,10 +74,10 @@ class RoomController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Room  $room
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Room $room)
+    public function update(Request $request, User $user)
     {
         //
     }
@@ -80,10 +85,10 @@ class RoomController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Room  $room
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Room $room)
+    public function destroy(User $user)
     {
         //
     }

@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\RoomController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Broadcast;
@@ -27,3 +29,5 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::resource('messages', MessageController::class)->only(['index', 'store']);
+Route::resource('rooms', RoomController::class)->only(['index']);
+Route::get('users', [UserController::class, 'index']);
